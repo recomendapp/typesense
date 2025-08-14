@@ -15,7 +15,8 @@
     },
     {
       "name": "followers_count",
-      "type": "int64"
+      "type": "int64",
+      "sort": true
     }
   ],
   "default_sorting_field": "followers_count"
