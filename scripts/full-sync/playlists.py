@@ -42,7 +42,8 @@ def sync_playlists():
 					EXTRACT(EPOCH FROM p.updated_at)::bigint, -- Convertir la date en timestamp Unix
 					p.private,
 					p.user_id,
-					ARRAY_REMOVE(ARRAY_AGG(pg.user_id::text), NULL) AS guest_ids
+					ARRAY_REMOVE(ARRAY_AGG(pg.user_id::text), NULL) AS guest_ids,
+					p.type
 				FROM
 					public.playlists p
 				LEFT JOIN
@@ -75,7 +76,8 @@ def sync_playlists():
 						'updated_at': record[6],
 						'is_private': record[7],
 						'owner_id': str(record[8]),
-						'guest_ids': [str(guest_id) for guest_id in record[9]]
+						'guest_ids': [str(guest_id) for guest_id in record[9]],
+						'type': record[10]
 					} for record in records
 				]
 				
